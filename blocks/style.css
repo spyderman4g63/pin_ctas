@@ -60,7 +60,7 @@
     background-color: #ffffff;
 }
 .pin-cta-default .pin-button:hover {
-    background-color: #d32f2f;
+    background-color: #932121;
     color: #ffffff;
 }
 
@@ -77,8 +77,8 @@
     border: 2px solid #ffffff;
 }
 .pin-cta-style1 .pin-button:hover {
-    background-color: #ffffff;
-    color: #4b2b38;
+    background-color: #2b1920;
+    color: #ffffff;
 }
 
 /* Style 2: Light Green Background */
@@ -94,8 +94,8 @@
     border: 2px solid #4b9f45;
 }
 .pin-cta-style2 .pin-button:hover {
-    background-color: #4b9f45;
-    color: #ffffff;
+    background-color: #adc4a4;
+    color: #333333;
 }
 
 /* Style 3: Light Pink Background */
@@ -111,8 +111,8 @@
     border: 2px solid #c85a5a;
 }
 .pin-cta-style3 .pin-button:hover {
-    background-color: #c85a5a;
-    color: #ffffff;
+    background-color: #dba89f;
+    color: #333333;
 }
 
 /* Style 4: Navy and Gold */
@@ -128,8 +128,8 @@
     border: 2px solid #ffd700;
 }
 .pin-cta-style4 .pin-button:hover {
-    background-color: #ffd700;
-    color: #1a2b3c;
+    background-color: #0e1824;
+    color: #ffffff;
 }
 
 /* Style 5: Sage and Cream */
@@ -145,8 +145,8 @@
     border: 2px solid #f5e6d3;
 }
 .pin-cta-style5 .pin-button:hover {
-    background-color: #f5e6d3;
-    color: #7c8c7d;
+    background-color: #4d574e;
+    color: #ffffff;
 }
 
 /* Style 6: Deep Purple and Lavender */
@@ -162,8 +162,8 @@
     border: 2px solid #e6e6fa;
 }
 .pin-cta-style6 .pin-button:hover {
-    background-color: #e6e6fa;
-    color: #2d1b36;
+    background-color: #150c19;
+    color: #ffffff;
 }
 
 /* Style 7: Teal and Coral */
@@ -179,8 +179,8 @@
     border: 2px solid #ffa07a;
 }
 .pin-cta-style7 .pin-button:hover {
-    background-color: #ffa07a;
-    color: #006d77;
+    background-color: #004047;
+    color: #ffffff;
 }
 
 /* Style 8: Midnight Blue & Silver */
@@ -196,8 +196,8 @@
     border: 2px solid #E0E1E4;
 }
 .pin-cta-style8 .pin-button:hover {
-    background-color: #E0E1E4;
-    color: #1B262C;
+    background-color: #0d1216;
+    color: #ffffff;
 }
 
 /* Style 9: Autumn Orange & Cream */
@@ -213,8 +213,8 @@
     border: 2px solid #FDF6E3;
 }
 .pin-cta-style9 .pin-button:hover {
-    background-color: #FDF6E3;
-    color: #D35400;
+    background-color: #8f3800;
+    color: #ffffff;
 }
 
 /* Style 10: Forest & Mint */
@@ -230,8 +230,8 @@
     border: 2px solid #98FFB3;
 }
 .pin-cta-style10 .pin-button:hover {
-    background-color: #98FFB3;
-    color: #2D5A27;
+    background-color: #152a12;
+    color: #ffffff;
 }
 
 /* Update the Pinterest icon styling */
