@@ -2,7 +2,7 @@
 /*
 Plugin Name: Pin CTA
 Description: Adds a Pinterest CTA shortcode and block with multiple design templates for the Gutenberg editor.
-Version: 1.5
+Version: 1.6
 Author: John Ward
 Author URI: https://johnathanward.com
 */

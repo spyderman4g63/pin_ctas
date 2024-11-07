@@ -3,7 +3,7 @@ Contributors: johnward
 Tags: Pinterest, CTA, call to action, social sharing, recipes
 Requires at least: 5.0
 Tested up to: 6.3
-Stable tag: 1.5
+Stable tag: 1.6
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -65,6 +65,15 @@ No, the plugin does not add any tracking or analytics. It simply creates a Pinte
 
 == Changelog ==
 
+= 1.6 =
+* Fixed memory exhaustion issues with content filtering
+* Added automatic placement options for Pin CTAs
+* Added new placement positions: after title, after first header, after first paragraph, middle content
+* Added inline layout option
+* Added more color schemes and styles
+* Improved settings page with better organization
+* Added support for custom Pinterest images
+
 = 1.5 =
 * Added multiple design templates.
 
@@ -73,7 +82,7 @@ No, the plugin does not add any tracking or analytics. It simply creates a Pinte
 
 == Upgrade Notice ==
 
-= 1.5 =
+= 1.6 =
 This version adds more styles. Update to access the new templates.
 
 == License ==
