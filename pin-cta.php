@@ -164,8 +164,24 @@ function pin_cta_add_admin_menu() {
 add_action('admin_menu', 'pin_cta_add_admin_menu');
 
 function pin_cta_settings_init() {
-    register_setting('pin_cta_settings', 'pin_cta_options');
+    // Register the settings with default values
+    register_setting(
+        'pin_cta_settings', 
+        'pin_cta_options',
+        array(
+            'type' => 'array',
+            'default' => array(
+                'pin_cta_auto_placement' => 'disabled',
+                'pin_cta_default_style' => 'default',
+                'pin_cta_default_layout' => 'block',
+                'pin_cta_default_text' => 'Pin This Now to Remember It Later',
+                'pin_cta_positions' => array('after_content')
+            ),
+            'sanitize_callback' => 'pin_cta_sanitize_options'
+        )
+    );
 
+    // Default Settings Section
     add_settings_section(
         'pin_cta_settings_section',
         'Default Settings',
@@ -199,7 +215,65 @@ function pin_cta_settings_init() {
         'pin_cta_settings',
         'pin_cta_settings_section'
     );
+
+    // Automatic Placement Section
+    add_settings_section(
+        'pin_cta_placement_section',
+        'Automatic Placement Settings',
+        null,
+        'pin_cta_settings'
+    );
+
+    // Add setting for automatic placement
+    add_settings_field(
+        'pin_cta_auto_placement',
+        'Automatic Placement',
+        'pin_cta_auto_placement_callback',
+        'pin_cta_settings',
+        'pin_cta_placement_section'
+    );
+
+    // Add setting for placement positions
+    add_settings_field(
+        'pin_cta_positions',
+        'Placement Positions',
+        'pin_cta_positions_callback',
+        'pin_cta_settings',
+        'pin_cta_placement_section'
+    );
 }
+
+// Update sanitization callback
+function pin_cta_sanitize_options($options) {
+    error_log('Sanitizing options: ' . print_r($options, true));
+    
+    // Ensure we have an array
+    if (!is_array($options)) {
+        $options = array();
+    }
+
+    // Set defaults if options are missing
+    $defaults = array(
+        'pin_cta_auto_placement' => 'disabled',
+        'pin_cta_default_style' => 'default',
+        'pin_cta_default_layout' => 'block',
+        'pin_cta_default_text' => 'Pin This Now to Remember It Later',
+        'pin_cta_positions' => array('after_content')
+    );
+
+    // Merge with defaults
+    $options = wp_parse_args($options, $defaults);
+
+    // Ensure positions is an array
+    if (!is_array($options['pin_cta_positions'])) {
+        $options['pin_cta_positions'] = array('after_content');
+    }
+
+    error_log('Sanitized options: ' . print_r($options, true));
+    return $options;
+}
+
+// Add this right after the initial plugin checks
 add_action('admin_init', 'pin_cta_settings_init');
 
 function pin_cta_style_field_callback() {
@@ -238,6 +312,48 @@ function pin_cta_text_field_callback() {
     <?php
 }
 
+function pin_cta_auto_placement_callback() {
+    $options = get_option('pin_cta_options', array('pin_cta_auto_placement' => 'disabled'));
+    ?>
+    <select name="pin_cta_options[pin_cta_auto_placement]">
+        <option value="disabled" <?php selected($options['pin_cta_auto_placement'], 'disabled'); ?>>Disabled</option>
+        <option value="enabled" <?php selected($options['pin_cta_auto_placement'], 'enabled'); ?>>Enabled</option>
+    </select>
+    <p class="description">Enable automatic placement of Pin CTA widgets in your content.</p>
+    <?php
+}
+
+function pin_cta_positions_callback() {
+    $defaults = array(
+        'pin_cta_positions' => array('after_content')
+    );
+    $options = get_option('pin_cta_options', $defaults);
+    
+    if (!isset($options['pin_cta_positions'])) {
+        $options['pin_cta_positions'] = $defaults['pin_cta_positions'];
+    }
+    
+    $positions = array(
+        'after_title' => 'After Title',
+        'after_first_header' => 'After First Header (H2-H6)',
+        'after_first_paragraph' => 'After First Paragraph',
+        'middle_content' => 'Middle of Content',
+        'after_content' => 'After Content'
+    );
+
+    foreach ($positions as $key => $label) {
+        $checked = in_array($key, (array)$options['pin_cta_positions']);
+        ?>
+        <label style="display: block; margin-bottom: 5px;">
+            <input type="checkbox" name="pin_cta_options[pin_cta_positions][]" 
+                   value="<?php echo esc_attr($key); ?>"
+                   <?php checked($checked); ?>>
+            <?php echo esc_html($label); ?>
+        </label>
+        <?php
+    }
+}
+
 function pin_cta_options_page() {
     ?>
     <div class="wrap">
@@ -254,3 +370,80 @@ function pin_cta_options_page() {
     </div>
     <?php
 }
+
+// Update the content filter to check only for posts
+function pin_cta_add_to_content($content) {
+    // Only proceed if we're on a single post
+    if (!is_singular('post') || !in_the_loop()) {
+        return $content;
+    }
+
+    // Get options
+    $options = get_option('pin_cta_options');
+    
+    // Check if automatic placement is enabled
+    if (empty($options['pin_cta_auto_placement']) || $options['pin_cta_auto_placement'] !== 'enabled') {
+        return $content;
+    }
+
+    // Generate the Pin CTA HTML
+    $pin_cta = pin_cta_shortcode(array(
+        'style' => $options['pin_cta_default_style'],
+        'isInline' => $options['pin_cta_default_layout'] === 'inline',
+        'customText' => $options['pin_cta_default_text']
+    ));
+
+    // Get selected positions
+    $positions = (array)$options['pin_cta_positions'];
+    
+    // Store original content
+    $modified_content = $content;
+
+    // Handle each position
+    foreach ($positions as $position) {
+        switch ($position) {
+            case 'after_title':
+                // Add at the beginning of content
+                $modified_content = $pin_cta . $modified_content;
+                break;
+
+            case 'after_first_header':
+                if (preg_match('/<h[2-6][^>]*>.*?<\/h[2-6]>/is', $modified_content)) {
+                    $modified_content = preg_replace(
+                        '/(<h[2-6][^>]*>.*?<\/h[2-6]>)/is',
+                        '$1' . $pin_cta,
+                        $modified_content,
+                        1
+                    );
+                }
+                break;
+
+            case 'after_first_paragraph':
+                $modified_content = preg_replace('/<\/p>/', '</p>' . $pin_cta, $modified_content, 1);
+                break;
+
+            case 'middle_content':
+                $parts = explode('</p>', $modified_content);
+                if (count($parts) > 1) {
+                    $middle = ceil(count($parts) / 2);
+                    $parts[$middle - 1] .= $pin_cta;
+                    $modified_content = implode('</p>', $parts);
+                }
+                break;
+
+            case 'after_content':
+                $modified_content .= $pin_cta;
+                break;
+        }
+    }
+
+    return $modified_content;
+}
+
+// Remove all existing hooks
+remove_filter('the_content', 'pin_cta_add_to_content', 20);
+remove_filter('the_title', 'pin_cta_after_post_title');
+
+// Add only the content filter
+add_filter('the_content', 'pin_cta_add_to_content', 20);
+
