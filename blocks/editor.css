@@ -1,0 +1,303 @@
+/* General Styles */
+.pin-cta-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.pin-cta-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.pin-cta-logo img {
+    width: 50px;
+    height: 50px;
+}
+.pin-cta-text {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.pin-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+.pin-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    filter: invert(1);
+}
+
+/* Theme-Specific Styles */
+
+/* Default Style */
+.pin-cta-default {
+    background-color: #d32f2f;
+    color: #ffffff;
+}
+.pin-cta-default .pin-cta-logo {
+    background-color: #ffffff;
+}
+.pin-cta-default .pin-button {
+    color: #d32f2f;
+    background-color: #ffffff;
+}
+.pin-cta-default .pin-button:hover {
+    background-color: #d32f2f;
+    color: #ffffff;
+}
+
+/* Style 1: Dark Background with Gold Icon */
+.pin-cta-style1 {
+    background-color: #4b2b38;
+    color: #ffffff;
+}
+.pin-cta-style1 .pin-cta-logo {
+    background-color: #d4a373;
+}
+.pin-cta-style1 .pin-button {
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+.pin-cta-style1 .pin-button:hover {
+    background-color: #ffffff;
+    color: #4b2b38;
+}
+
+/* Style 2: Light Green Background */
+.pin-cta-style2 {
+    background-color: #e1ebdd;
+    color: #333333;
+}
+.pin-cta-style2 .pin-cta-logo {
+    background-color: #4b9f45;
+}
+.pin-cta-style2 .pin-button {
+    color: #4b9f45;
+    border: 2px solid #4b9f45;
+}
+.pin-cta-style2 .pin-button:hover {
+    background-color: #4b9f45;
+    color: #ffffff;
+}
+
+/* Style 3: Light Pink Background */
+.pin-cta-style3 {
+    background-color: #f7e1dd;
+    color: #333333;
+}
+.pin-cta-style3 .pin-cta-logo {
+    background-color: #333333;
+}
+.pin-cta-style3 .pin-button {
+    color: #c85a5a;
+    border: 2px solid #c85a5a;
+}
+.pin-cta-style3 .pin-button:hover {
+    background-color: #c85a5a;
+    color: #ffffff;
+}
+
+/* Add hover state for dark buttons */
+.pin-cta-default .pin-button:hover img,
+.pin-cta-style1 .pin-button:hover img {
+    filter: none;
+}
+
+/* Update the Pinterest icon styling */
+.pinterest-icon {
+    margin-right: 10px;
+    fill: currentColor; /* This makes the SVG match the text color */
+}
+
+/* Remove the old img styling */
+.pin-button img {
+    display: none;
+}
+
+/* Add the same inline styles from style.css */
+/* Inline Layout Styles */
+.pin-cta-inline {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    gap: 20px;
+}
+
+.pin-cta-inline .pin-cta-logo {
+    margin-bottom: 0;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.pin-cta-inline .pin-cta-logo img {
+    width: 35px;
+    height: 35px;
+}
+
+.pin-cta-inline .pin-cta-text {
+    margin-bottom: 0;
+    text-align: left;
+    font-size: 1.2em;
+    flex-grow: 1;
+}
+
+.pin-cta-inline .pin-button {
+    flex-shrink: 0;
+}
+
+/* Responsive Design for Inline Layout */
+@media (max-width: 768px) {
+    .pin-cta-inline {
+        flex-direction: column;
+        padding: 30px 20px;
+    }
+    
+    .pin-cta-inline .pin-cta-logo {
+        margin-bottom: 20px;
+    }
+    
+    .pin-cta-inline .pin-cta-text {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+/* Add the same new styles to editor.css */
+/* Style 4: Navy and Gold */
+.pin-cta-style4 {
+    background-color: #1a2b3c;
+    color: #ffffff;
+}
+.pin-cta-style4 .pin-cta-logo {
+    background-color: #ffd700;
+}
+.pin-cta-style4 .pin-button {
+    color: #ffd700;
+    border: 2px solid #ffd700;
+}
+.pin-cta-style4 .pin-button:hover {
+    background-color: #ffd700;
+    color: #1a2b3c;
+}
+
+/* Style 5: Sage and Cream */
+.pin-cta-style5 {
+    background-color: #7c8c7d;
+    color: #ffffff;
+}
+.pin-cta-style5 .pin-cta-logo {
+    background-color: #f5e6d3;
+}
+.pin-cta-style5 .pin-button {
+    color: #f5e6d3;
+    border: 2px solid #f5e6d3;
+}
+.pin-cta-style5 .pin-button:hover {
+    background-color: #f5e6d3;
+    color: #7c8c7d;
+}
+
+/* Style 6: Deep Purple and Lavender */
+.pin-cta-style6 {
+    background-color: #2d1b36;
+    color: #ffffff;
+}
+.pin-cta-style6 .pin-cta-logo {
+    background-color: #e6e6fa;
+}
+.pin-cta-style6 .pin-button {
+    color: #e6e6fa;
+    border: 2px solid #e6e6fa;
+}
+.pin-cta-style6 .pin-button:hover {
+    background-color: #e6e6fa;
+    color: #2d1b36;
+}
+
+/* Style 7: Teal and Coral */
+.pin-cta-style7 {
+    background-color: #006d77;
+    color: #ffffff;
+}
+.pin-cta-style7 .pin-cta-logo {
+    background-color: #ffa07a;
+}
+.pin-cta-style7 .pin-button {
+    color: #ffa07a;
+    border: 2px solid #ffa07a;
+}
+.pin-cta-style7 .pin-button:hover {
+    background-color: #ffa07a;
+    color: #006d77;
+}
+
+/* Style 8: Midnight Blue & Silver */
+.pin-cta-style8 {
+    background-color: #1B262C;
+    color: #ffffff;
+}
+.pin-cta-style8 .pin-cta-logo {
+    background-color: #E0E1E4;
+}
+.pin-cta-style8 .pin-button {
+    color: #E0E1E4;
+    border: 2px solid #E0E1E4;
+}
+.pin-cta-style8 .pin-button:hover {
+    background-color: #E0E1E4;
+    color: #1B262C;
+}
+
+/* Style 9: Autumn Orange & Cream */
+.pin-cta-style9 {
+    background-color: #D35400;
+    color: #ffffff;
+}
+.pin-cta-style9 .pin-cta-logo {
+    background-color: #FDF6E3;
+}
+.pin-cta-style9 .pin-button {
+    color: #FDF6E3;
+    border: 2px solid #FDF6E3;
+}
+.pin-cta-style9 .pin-button:hover {
+    background-color: #FDF6E3;
+    color: #D35400;
+}
+
+/* Style 10: Forest & Mint */
+.pin-cta-style10 {
+    background-color: #2D5A27;
+    color: #ffffff;
+}
+.pin-cta-style10 .pin-cta-logo {
+    background-color: #98FFB3;
+}
+.pin-cta-style10 .pin-button {
+    color: #98FFB3;
+    border: 2px solid #98FFB3;
+}
+.pin-cta-style10 .pin-button:hover {
+    background-color: #98FFB3;
+    color: #2D5A27;
+}
