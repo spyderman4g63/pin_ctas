@@ -1,94 +1,113 @@
 === Pin CTA ===
-Contributors: johnward
-Tags: Pinterest, CTA, call to action, social sharing, recipes
-Requires at least: 5.0
-Tested up to: 6.3
-Stable tag: 1.6
+Contributors: spyderman4g63
+Tags: Pinterest, Pin, Share, CTA, Share on Pinterest
+Requires at least: 6.7
+Tested up to: 6.7.1
+Stable tag: 1.0.0
 Requires PHP: 7.0
-License: GPLv2 or later
+License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add customizable Pinterest CTA buttons to your site with multiple styles to encourage users to pin recipes and remember content.
+Add beautiful Pinterest share buttons to your content with 10 stunning pre-built styles.
 
 == Description ==
 
-**Pin CTA** is a versatile WordPress plugin that allows you to add attractive, customizable Pinterest call-to-action (CTA) buttons to your posts or pages. Encourage your visitors to pin recipes, blog posts, or other content with different design templates.
+**Pin CTA** is a powerful WordPress plugin that helps you encourage Pinterest sharing with stylish, customizable call-to-action buttons. Available as both a Gutenberg block and shortcode, it's perfect for food bloggers, DIY websites, and any content creator wanting to boost their Pinterest engagement.
 
-The plugin includes three styles that you can choose from using shortcode attributes. Each style provides a unique look and feel to match your website's design.
+The plugin includes ten professionally designed styles, ranging from classic Pinterest red to elegant color combinations that will match any website theme.
 
-== Features ==
+= Key Features =
 
-* Multiple design styles for Pinterest CTA buttons.
-* Simple shortcode to add CTA buttons anywhere on your site.
-* Dynamically pulls the current page URL, featured image, and title for Pinterest sharing.
-* Responsive design for seamless display on all devices.
+* 10 beautiful pre-designed styles
+* Available as both Gutenberg block and shortcode
+* Inline or block layout options
+* Custom text support
+* Automatic image detection (uses featured image, first content image, or custom selection)
+* Responsive design for all devices
+* No tracking or external dependencies
+* SEO-friendly implementation
 
 == Installation ==
 
-1. Upload the `pin-cta.zip` file through the **Plugins > Add New > Upload Plugin** screen in your WordPress dashboard.
-2. Activate the plugin through the **Plugins** screen.
-3. Use the `[recipe_pin_button style="style1"]` shortcode in your posts or pages, selecting the style that best suits your content.
+1. Upload `pin-cta.zip` through the **Plugins > Add New > Upload Plugin** screen
+2. Activate the plugin through the **Plugins** menu
+3. Use either the Gutenberg block or shortcode to add buttons to your content
 
 == Usage ==
 
-To use the plugin, add the following shortcode to your WordPress editor:
+= Gutenberg Block =
+1. Add the "Pin CTA" block to your post
+2. Customize the style, layout, and text in the block settings
+3. Optionally select a custom Pinterest image
 
-* **Default Style (Red Background)**:
-  `[recipe_pin_button style="default"]`
+= Shortcode =
+Use the following shortcode format:
+`[pin_cta_button style="style1" inline="false" custom_text="Pin This Recipe"]`
 
-* **Style 1 (Dark Background with Gold Icon)**:
-  `[recipe_pin_button style="style1"]`
+= Available Styles =
 
-* **Style 2 (Light Green Background)**:
-  `[recipe_pin_button style="style2"]`
+* **Classic Red & White**: `style="default"`
+* **Burgundy & Gold**: `style="style1"`
+* **Fresh Green & White**: `style="style2"`
+* **Soft Pink & Rose**: `style="style3"`
+* **Navy & Gold**: `style="style4"`
+* **Sage & Cream**: `style="style5"`
+* **Royal Purple & Lavender**: `style="style6"`
+* **Ocean Teal & Coral**: `style="style7"`
+* **Midnight Blue & Silver**: `style="style8"`
+* **Autumn Orange & Cream**: `style="style9"`
+* **Forest & Mint**: `style="style10"`
 
-* **Style 3 (Light Pink Background)**:
-  `[recipe_pin_button style="style3"]`
+= Shortcode Parameters =
+
+* `style`: Choose from style1 through style10 (default: "default")
+* `inline`: Set to "true" for inline layout (default: false)
+* `custom_text`: Your custom call-to-action text
+* `media_id`: Specify a custom image ID for Pinterest sharing
 
 == Screenshots ==
-
-1. Default Style: Red background with a white button.
-2. Style 1: Dark background with a large gold Pinterest icon.
-3. Style 2: Light green background with a green Pinterest icon.
-4. Style 3: Light pink background with a black Pinterest icon.
+1. Plugin in use on a post.
+2. All colors available.
 
 == Frequently Asked Questions ==
 
 = Can I customize the colors or styles? =
-Currently, there are three built-in styles. If you want to customize beyond these options, you may edit the CSS within the plugin file.
+The plugin includes 10 pre-built styles. For custom colors, you can edit the CSS or contact us for custom development.
 
-= Will this plugin work with other social media platforms? =
-No, this plugin is designed specifically for Pinterest.
+= Which image will be used for Pinterest sharing? =
+The plugin follows this priority:
+1. Custom selected image (if specified)
+2. First image in post content
+3. Featured image
+4. SEO meta image (Yoast or Rank Math)
 
-= Does this plugin add any tracking? =
-No, the plugin does not add any tracking or analytics. It simply creates a Pinterest link for sharing the content.
+= Does this work with page builders? =
+Yes! You can use the shortcode in any page builder that accepts shortcodes.
+
+= Will this slow down my site? =
+No, the plugin is lightweight and uses native WordPress functions. No external scripts are loaded.
 
 == Changelog ==
 
 = 1.6 =
-* Fixed memory exhaustion issues with content filtering
-* Added automatic placement options for Pin CTAs
-* Added new placement positions: after title, after first header, after first paragraph, middle content
-* Added inline layout option
-* Added more color schemes and styles
-* Improved settings page with better organization
-* Added support for custom Pinterest images
+* Added 6 new style variations
+* Introduced inline layout option
+* Added Gutenberg block support
+* Improved image detection logic
 
-= 1.5 =
-* Added multiple design templates.
-
-= 1.0 =
-* Initial release with default Pinterest CTA design.
+= 1.0.0 =
+* Initial release
 
 == Upgrade Notice ==
 
 = 1.6 =
-This version adds more styles. Update to access the new templates.
+Major update with new styles, layouts, and Gutenberg block support.
 
 == License ==
 
-This plugin is free software licensed under the GPLv2 or later. For details, see https://www.gnu.org/licenses/gpl-2.0.html.
+This plugin is licensed under the GPL v2 or later.
 
-== More Information ==
+== Credits ==
 
-For more information, visit [johnathanward.com](https://johnathanward.com).
+* Pinterest logo used with permission under Pinterest's brand guidelines
+* Icons: Dashicons (WordPress native)

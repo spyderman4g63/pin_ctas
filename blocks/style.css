@@ -14,16 +14,16 @@
 .pin-cta-logo {
     width: 80px;
     height: 80px;
-    border-radius: 50%; /* Makes it a circle */
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
+    border-radius: 50%;
 }
 
-.pin-cta-logo img {
-    width: 50px;
-    height: 50px;
+.pin-cta-logo svg.pin-cta-pinterest-icon {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
 }
 
 /* Styling for the main text */
@@ -34,7 +34,7 @@
 }
 
 /* Styling for the button */
-.pin-button {
+.pin-cta-pin-button {
     display: flex;
     align-items: center;
     padding: 10px 20px;
@@ -55,13 +55,16 @@
 .pin-cta-default .pin-cta-logo {
     background-color: #ffffff;
 }
-.pin-cta-default .pin-button {
+.pin-cta-default .pin-cta-pin-button {
     color: #d32f2f;
     background-color: #ffffff;
 }
-.pin-cta-default .pin-button:hover {
+.pin-cta-default .pin-cta-pin-button:hover {
     background-color: #932121;
     color: #ffffff;
+}
+.pin-cta-default .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #932121;
 }
 
 /* Style 1: Dark Background with Gold Icon */
@@ -72,13 +75,16 @@
 .pin-cta-style1 .pin-cta-logo {
     background-color: #d4a373;
 }
-.pin-cta-style1 .pin-button {
+.pin-cta-style1 .pin-cta-pin-button {
     color: #ffffff;
     border: 2px solid #ffffff;
 }
-.pin-cta-style1 .pin-button:hover {
+.pin-cta-style1 .pin-cta-pin-button:hover {
     background-color: #2b1920;
     color: #ffffff;
+}
+.pin-cta-style1 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #2b1920;
 }
 
 /* Style 2: Light Green Background */
@@ -89,13 +95,16 @@
 .pin-cta-style2 .pin-cta-logo {
     background-color: #4b9f45;
 }
-.pin-cta-style2 .pin-button {
+.pin-cta-style2 .pin-cta-pin-button {
     color: #4b9f45;
     border: 2px solid #4b9f45;
 }
-.pin-cta-style2 .pin-button:hover {
+.pin-cta-style2 .pin-cta-pin-button:hover {
     background-color: #adc4a4;
     color: #333333;
+}
+.pin-cta-style2 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #ffffff;
 }
 
 /* Style 3: Light Pink Background */
@@ -104,15 +113,18 @@
     color: #333333;
 }
 .pin-cta-style3 .pin-cta-logo {
-    background-color: #333333;
+    background-color: #c85a5a;
 }
-.pin-cta-style3 .pin-button {
+.pin-cta-style3 .pin-cta-pin-button {
     color: #c85a5a;
     border: 2px solid #c85a5a;
 }
-.pin-cta-style3 .pin-button:hover {
+.pin-cta-style3 .pin-cta-pin-button:hover {
     background-color: #dba89f;
-    color: #333333;
+    color: #c85a5a;
+}
+.pin-cta-style3 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #ffffff;
 }
 
 /* Style 4: Navy and Gold */
@@ -123,13 +135,16 @@
 .pin-cta-style4 .pin-cta-logo {
     background-color: #ffd700;
 }
-.pin-cta-style4 .pin-button {
+.pin-cta-style4 .pin-cta-pin-button {
     color: #ffd700;
     border: 2px solid #ffd700;
 }
-.pin-cta-style4 .pin-button:hover {
+.pin-cta-style4 .pin-cta-pin-button:hover {
     background-color: #0e1824;
     color: #ffffff;
+}
+.pin-cta-style4 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #0e1824;
 }
 
 /* Style 5: Sage and Cream */
@@ -140,13 +155,16 @@
 .pin-cta-style5 .pin-cta-logo {
     background-color: #f5e6d3;
 }
-.pin-cta-style5 .pin-button {
+.pin-cta-style5 .pin-cta-pin-button {
     color: #f5e6d3;
     border: 2px solid #f5e6d3;
 }
-.pin-cta-style5 .pin-button:hover {
+.pin-cta-style5 .pin-cta-pin-button:hover {
     background-color: #4d574e;
     color: #ffffff;
+}
+.pin-cta-style5 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #4d574e;
 }
 
 /* Style 6: Deep Purple and Lavender */
@@ -157,13 +175,16 @@
 .pin-cta-style6 .pin-cta-logo {
     background-color: #e6e6fa;
 }
-.pin-cta-style6 .pin-button {
+.pin-cta-style6 .pin-cta-pin-button {
     color: #e6e6fa;
     border: 2px solid #e6e6fa;
 }
-.pin-cta-style6 .pin-button:hover {
+.pin-cta-style6 .pin-cta-pin-button:hover {
     background-color: #150c19;
     color: #ffffff;
+}
+.pin-cta-style6 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #150c19;
 }
 
 /* Style 7: Teal and Coral */
@@ -174,13 +195,16 @@
 .pin-cta-style7 .pin-cta-logo {
     background-color: #ffa07a;
 }
-.pin-cta-style7 .pin-button {
+.pin-cta-style7 .pin-cta-pin-button {
     color: #ffa07a;
     border: 2px solid #ffa07a;
 }
-.pin-cta-style7 .pin-button:hover {
+.pin-cta-style7 .pin-cta-pin-button:hover {
     background-color: #004047;
     color: #ffffff;
+}
+.pin-cta-style7 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #004047;
 }
 
 /* Style 8: Midnight Blue & Silver */
@@ -191,13 +215,16 @@
 .pin-cta-style8 .pin-cta-logo {
     background-color: #E0E1E4;
 }
-.pin-cta-style8 .pin-button {
+.pin-cta-style8 .pin-cta-pin-button {
     color: #E0E1E4;
     border: 2px solid #E0E1E4;
 }
-.pin-cta-style8 .pin-button:hover {
+.pin-cta-style8 .pin-cta-pin-button:hover {
     background-color: #0d1216;
     color: #ffffff;
+}
+.pin-cta-style8 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #0d1216;
 }
 
 /* Style 9: Autumn Orange & Cream */
@@ -208,13 +235,16 @@
 .pin-cta-style9 .pin-cta-logo {
     background-color: #FDF6E3;
 }
-.pin-cta-style9 .pin-button {
+.pin-cta-style9 .pin-cta-pin-button {
     color: #FDF6E3;
     border: 2px solid #FDF6E3;
 }
-.pin-cta-style9 .pin-button:hover {
+.pin-cta-style9 .pin-cta-pin-button:hover {
     background-color: #8f3800;
     color: #ffffff;
+}
+.pin-cta-style9 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #8f3800;
 }
 
 /* Style 10: Forest & Mint */
@@ -225,33 +255,34 @@
 .pin-cta-style10 .pin-cta-logo {
     background-color: #98FFB3;
 }
-.pin-cta-style10 .pin-button {
+.pin-cta-style10 .pin-cta-pin-button {
     color: #98FFB3;
     border: 2px solid #98FFB3;
 }
-.pin-cta-style10 .pin-button:hover {
+.pin-cta-style10 .pin-cta-pin-button:hover {
     background-color: #152a12;
     color: #ffffff;
 }
+.pin-cta-style10 .pin-cta-logo svg.pin-cta-pinterest-icon {
+    fill: #152a12;
+}
 
 /* Update the Pinterest icon styling */
-.pinterest-icon {
+.pin-cta-pinterest-icon {
     margin-right: 10px;
     fill: currentColor; /* This makes the SVG match the text color */
 }
 
 /* Remove the old img styling */
-.pin-button img {
+.pin-cta-pin-button img {
     display: none;
 }
 
 /* Add hover state for dark buttons */
-.pin-cta-default .pin-button:hover img,
-.pin-cta-style1 .pin-button:hover img {
+.pin-cta-default .pin-cta-pin-button:hover img,
+.pin-cta-style1 .pin-cta-pin-button:hover img {
     filter: none; /* Show original dark logo on light background */
 }
-
-/* Add after your existing styles */
 
 /* Inline Layout Styles */
 .pin-cta-inline {
@@ -281,7 +312,7 @@
     flex-grow: 1;
 }
 
-.pin-cta-inline .pin-button {
+.pin-cta-inline .pin-cta-pin-button {
     flex-shrink: 0;
 }
 

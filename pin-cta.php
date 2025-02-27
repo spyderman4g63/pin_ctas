@@ -1,10 +1,12 @@
 <?php
 /*
 Plugin Name: Pin CTA
-Description: Adds a Pinterest CTA shortcode and block with multiple design templates for the Gutenberg editor.
-Version: 1.6
+Description: Adds a Pinterest Share shortcode and block.
+Version: 1.0.0
 Author: John Ward
 Author URI: https://johnathanward.com
+License: GPLv2
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 if (!defined('ABSPATH')) {
@@ -32,7 +34,7 @@ function pin_cta_shortcode($atts) {
         $custom_text = $atts['custom_text'];
     }
 
-    $inline_class = $inline ? ' pin-cta-inline' : '';
+    $inline_class = $inline ? esc_attr(' pin-cta-inline') : '';
     
     // Determine which image URL to use
     $image_url = '';
@@ -62,13 +64,15 @@ function pin_cta_shortcode($atts) {
     
     ob_start();
     ?>
-    <div class="pin-cta-container pin-cta-<?php echo esc_attr($style); ?><?php echo $inline_class; ?>">
+    <div class="pin-cta-container pin-cta-<?php echo esc_attr($style); ?><?php echo esc_attr($inline_class); ?>">
         <div class="pin-cta-logo">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png" alt="Pinterest">
+            <svg class="pin-cta-pinterest-icon" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/>
+            </svg>
         </div>
         <div class="pin-cta-text"><?php echo esc_html($custom_text); ?></div>
-        <a href="https://pinterest.com/pin/create/button/?url=<?php echo urlencode(get_permalink()); ?>&media=<?php echo esc_url($image_url); ?>&description=<?php echo urlencode(get_the_title()); ?>" target="_blank" class="pin-button">
-            <svg class="pinterest-icon" viewBox="0 0 24 24" width="20" height="20">
+        <a href="https://pinterest.com/pin/create/button/?url=<?php echo urlencode(get_permalink()); ?>&media=<?php echo esc_url($image_url); ?>&description=<?php echo urlencode(get_the_title()); ?>" target="_blank" class="pin-cta-pin-button">
+            <svg class="pin-cta-pinterest-icon" viewBox="0 0 24 24" width="20" height="20">
                 <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/>
             </svg>
             Pin This
@@ -92,7 +96,8 @@ function pin_cta_register_block() {
         'pin-cta-block',
         plugins_url('blocks/block.js', __FILE__),
         array('wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'),
-        filemtime(plugin_dir_path(__FILE__) . 'blocks/block.js')
+        filemtime(plugin_dir_path(__FILE__) . 'blocks/block.js'),
+        true // Load script in the footer
     );
 
     // Pass defaults to JavaScript
@@ -102,14 +107,6 @@ function pin_cta_register_block() {
         'text' => $options['pin_cta_default_text'],
         'pluginUrl' => plugins_url('', __FILE__)
     ));
-
-    // Register styles
-    wp_register_style(
-        'pin-cta-editor-style',
-        plugins_url('blocks/editor.css', __FILE__),
-        array(),
-        filemtime(plugin_dir_path(__FILE__) . 'blocks/editor.css')
-    );
 
     wp_register_style(
         'pin-cta-style',
@@ -244,9 +241,7 @@ function pin_cta_settings_init() {
 }
 
 // Update sanitization callback
-function pin_cta_sanitize_options($options) {
-    error_log('Sanitizing options: ' . print_r($options, true));
-    
+function pin_cta_sanitize_options($options) {        
     // Ensure we have an array
     if (!is_array($options)) {
         $options = array();
@@ -269,7 +264,6 @@ function pin_cta_sanitize_options($options) {
         $options['pin_cta_positions'] = array('after_content');
     }
 
-    error_log('Sanitized options: ' . print_r($options, true));
     return $options;
 }
 
