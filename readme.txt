@@ -2,8 +2,8 @@
 Contributors: spyderman4g63
 Tags: Pinterest, Pin, Share, CTA, Share on Pinterest
 Requires at least: 6.7
-Tested up to: 6.7.1
-Stable tag: 1.0.0
+Tested up to: 6.7
+Stable tag: 1.0.1
 Requires PHP: 7.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -87,7 +87,24 @@ Yes! You can use the shortcode in any page builder that accepts shortcodes.
 = Will this slow down my site? =
 No, the plugin is lightweight and uses native WordPress functions. No external scripts are loaded.
 
+== Screenshots ==s
+1. How it looks on site
+2. Options page
+3. Color options
+
 == Changelog ==
+
+= 1.0.3
+* fix automatic placement bug
+
+= 1.0.2
+* fix display on posts
+
+= 1.0.1 =
+* Fixed sanitization in plugin settings
+* Improved escaping of URLs for better security
+* Removed hidden files from plugin package
+* Updated "Tested up to" format in readme
 
 = 1.6 =
 * Added 6 new style variations
@@ -99,6 +116,9 @@ No, the plugin is lightweight and uses native WordPress functions. No external s
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Security and compatibility update. Improves sanitization and escaping for better security.
 
 = 1.6 =
 Major update with new styles, layouts, and Gutenberg block support.

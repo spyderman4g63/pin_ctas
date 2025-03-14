@@ -1,0 +1,82 @@
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# WordPress specific files
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/mu-plugins/
+wp-content/wp-cache-config.php
+wp-content/plugins/hello.php
+
+# WordPress core (if WordPress is in git)
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/xmlrpc.php
+/license.txt
+/readme.html
+/index.php
+
+# Plugin specific
+/vendor/
+/node_modules/
+/dist/
+/build/
+*.zip
+*.tar.gz
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*.swn
+*~
+.project
+.settings/
+.classpath
+.buildpath
+nbproject/
+
+# Log files
+*.log
+error_log
+access_log
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Dependency directories
+/jspm_packages/
+/bower_components/
+
+# Testing
+/phpunit.xml
+/tests/coverage/
+
+# Temporary files
+/tmp/
+/temp/ 

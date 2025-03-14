@@ -1,48 +1,51 @@
 /* General Styles */
 .pin-cta-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 20px;
-    font-family: Arial, sans-serif;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 40px 20px !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+    font-family: Arial, sans-serif !important;
+    width: auto !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 /* Styling for the Pinterest logo container */
-.pin-cta-logo {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+.pin-cta-container .pin-cta-logo {
+    width: 80px !important;
+    height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
 }
 
-.pin-cta-logo svg.pin-cta-pinterest-icon {
-    width: 36px;
-    height: 36px;
-    margin: 0 auto;
+.pin-cta-container .pin-cta-logo svg.pin-cta-pinterest-icon {
+    width: 36px !important;
+    height: 36px !important;
+    margin: 0 auto !important;
 }
 
 /* Styling for the main text */
-.pin-cta-text {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-bottom: 20px;
+.pin-cta-container .pin-cta-text {
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+    margin-bottom: 20px !important;
 }
 
 /* Styling for the button */
-.pin-cta-pin-button {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 30px;
-    font-size: 1em;
-    font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
+.pin-cta-container .pin-cta-pin-button {
+    display: flex !important;
+    align-items: center !important;
+    padding: 10px 20px !important;
+    text-decoration: none !important;
+    border-radius: 30px !important;
+    font-size: 1em !important;
+    font-weight: bold !important;
+    transition: background-color 0.3s, color 0.3s !important;
 }
 
 /* Theme-Specific Styles */

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Pin CTA
 Description: Adds a Pinterest Share shortcode and block.
-Version: 1.0.0
+Version: 1.0.3
 Author: John Ward
 Author URI: https://johnathanward.com
 License: GPLv2
@@ -15,22 +15,28 @@ if (!defined('ABSPATH')) {
 
 // Register the shortcode
 function pin_cta_shortcode($atts) {
+    // For debugging
+    error_log('Pin CTA shortcode called with: ' . print_r($atts, true));
+    
     // Handle both block attributes and shortcode attributes
     if (is_array($atts)) {
         $style = isset($atts['style']) ? $atts['style'] : 'default';
         $inline = isset($atts['isInline']) ? $atts['isInline'] : false;
         $media_id = isset($atts['mediaId']) ? $atts['mediaId'] : null;
+        $media_url = isset($atts['mediaUrl']) ? $atts['mediaUrl'] : '';
         $custom_text = isset($atts['customText']) ? $atts['customText'] : 'Pin This Now to Remember It Later';
     } else {
         $atts = shortcode_atts(array(
             'style' => 'default',
             'inline' => false,
             'media_id' => null,
+            'media_url' => '',
             'custom_text' => 'Pin This Now to Remember It Later'
         ), $atts, 'pin_cta_button');
         $style = $atts['style'];
         $inline = filter_var($atts['inline'], FILTER_VALIDATE_BOOLEAN);
         $media_id = $atts['media_id'];
+        $media_url = $atts['media_url'];
         $custom_text = $atts['custom_text'];
     }
 
@@ -71,7 +77,7 @@ function pin_cta_shortcode($atts) {
             </svg>
         </div>
         <div class="pin-cta-text"><?php echo esc_html($custom_text); ?></div>
-        <a href="https://pinterest.com/pin/create/button/?url=<?php echo urlencode(get_permalink()); ?>&media=<?php echo esc_url($image_url); ?>&description=<?php echo urlencode(get_the_title()); ?>" target="_blank" class="pin-cta-pin-button">
+        <a href="<?php echo esc_url("https://pinterest.com/pin/create/button/?url=" . urlencode(get_permalink()) . "&media=" . urlencode($image_url) . "&description=" . urlencode(get_the_title())); ?>" target="_blank" class="pin-cta-pin-button">
             <svg class="pin-cta-pinterest-icon" viewBox="0 0 24 24" width="20" height="20">
                 <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/>
             </svg>
@@ -81,7 +87,6 @@ function pin_cta_shortcode($atts) {
     <?php
     return ob_get_clean();
 }
-add_shortcode('pin_cta_button', 'pin_cta_shortcode');
 
 function pin_cta_register_block() {
     // Get default options
@@ -114,13 +119,20 @@ function pin_cta_register_block() {
         array(),
         filemtime(plugin_dir_path(__FILE__) . 'blocks/style.css')
     );
+    
+    // Ensure the style is enqueued for the frontend
+    wp_enqueue_style('pin-cta-style');
 
     // Register the block
     register_block_type('pin-cta/block', array(
         'editor_script' => 'pin-cta-block',
         'editor_style' => 'pin-cta-editor-style',
         'style' => 'pin-cta-style',
-        'render_callback' => 'pin_cta_shortcode',
+        'render_callback' => function($attributes, $content) {
+            // For debugging
+            error_log('Pin CTA block render callback called with: ' . print_r($attributes, true));
+            return pin_cta_shortcode($attributes);
+        },
         'attributes' => array(
             'style' => array(
                 'type' => 'string',
@@ -143,7 +155,19 @@ function pin_cta_register_block() {
         )
     ));
 }
-add_action('init', 'pin_cta_register_block');
+
+// Ensure styles are loaded on the frontend
+function pin_cta_enqueue_frontend_styles() {
+    if (has_block('pin-cta/block') || is_singular()) {
+        wp_enqueue_style(
+            'pin-cta-style',
+            plugins_url('blocks/style.css', __FILE__),
+            array(),
+            filemtime(plugin_dir_path(__FILE__) . 'blocks/style.css')
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'pin_cta_enqueue_frontend_styles');
 
 // Add these functions after the existing code but before the closing PHP tag
 
@@ -158,24 +182,28 @@ function pin_cta_add_admin_menu() {
         30 // Position in menu (lower numbers = higher in sidebar)
     );
 }
-add_action('admin_menu', 'pin_cta_add_admin_menu');
+// add_action('admin_menu', 'pin_cta_add_admin_menu'); // Removed duplicate, now handled in pin_cta_init()
 
 function pin_cta_settings_init() {
-    // Register the settings with default values
+    // Define default options
+    $defaults = array(
+        'pin_cta_auto_placement' => 'disabled',
+        'pin_cta_default_style' => 'default',
+        'pin_cta_default_layout' => 'block',
+        'pin_cta_default_text' => 'Pin This Now to Remember It Later',
+        'pin_cta_positions' => array('after_content')
+    );
+
+    // Set default options if they don't exist
+    if (!get_option('pin_cta_options')) {
+        update_option('pin_cta_options', $defaults);
+    }
+
+    // Register the settings with simpler format to avoid dynamic argument warning
     register_setting(
-        'pin_cta_settings', 
-        'pin_cta_options',
-        array(
-            'type' => 'array',
-            'default' => array(
-                'pin_cta_auto_placement' => 'disabled',
-                'pin_cta_default_style' => 'default',
-                'pin_cta_default_layout' => 'block',
-                'pin_cta_default_text' => 'Pin This Now to Remember It Later',
-                'pin_cta_positions' => array('after_content')
-            ),
-            'sanitize_callback' => 'pin_cta_sanitize_options'
-        )
+        'pin_cta_settings',  // Option group
+        'pin_cta_options',   // Option name
+        'pin_cta_sanitize_options' // Sanitization callback
     );
 
     // Default Settings Section
@@ -240,8 +268,16 @@ function pin_cta_settings_init() {
     );
 }
 
-// Update sanitization callback
+/**
+ * Sanitize plugin options
+ *
+ * @param array $options The options array to sanitize
+ * @return array Sanitized options
+ */
 function pin_cta_sanitize_options($options) {        
+    // For debugging
+    error_log('Pin CTA sanitizing options: ' . print_r($options, true));
+    
     // Ensure we have an array
     if (!is_array($options)) {
         $options = array();
@@ -259,16 +295,46 @@ function pin_cta_sanitize_options($options) {
     // Merge with defaults
     $options = wp_parse_args($options, $defaults);
 
-    // Ensure positions is an array
-    if (!is_array($options['pin_cta_positions'])) {
+    // Sanitize auto placement (must be one of: disabled, enabled)
+    $valid_auto_placements = array('disabled', 'enabled');
+    if (!in_array($options['pin_cta_auto_placement'], $valid_auto_placements)) {
+        $options['pin_cta_auto_placement'] = 'disabled';
+    }
+    
+    // Sanitize default style (must be one of: default, style1, style2, etc.)
+    $valid_styles = array('default', 'style1', 'style2', 'style3', 'style4', 'style5', 
+                         'style6', 'style7', 'style8', 'style9', 'style10');
+    if (!in_array($options['pin_cta_default_style'], $valid_styles)) {
+        $options['pin_cta_default_style'] = 'default';
+    }
+    
+    // Sanitize default layout (must be one of: block, inline)
+    $valid_layouts = array('block', 'inline');
+    if (!in_array($options['pin_cta_default_layout'], $valid_layouts)) {
+        $options['pin_cta_default_layout'] = 'block';
+    }
+    
+    // Sanitize default text
+    $options['pin_cta_default_text'] = sanitize_text_field($options['pin_cta_default_text']);
+    
+    // Ensure positions is an array and contains only valid positions
+    if (!isset($options['pin_cta_positions']) || !is_array($options['pin_cta_positions']) || (is_array($options['pin_cta_positions']) && count($options['pin_cta_positions']) === 1 && $options['pin_cta_positions'][0] === '')) {
         $options['pin_cta_positions'] = array('after_content');
+    } else {
+        $valid_positions = array('after_title', 'after_first_header', 'after_first_paragraph', 'middle_content', 'after_content');
+        $options['pin_cta_positions'] = array_intersect($options['pin_cta_positions'], $valid_positions);
+        
+        // If no valid positions remain, set default
+        if (empty($options['pin_cta_positions'])) {
+            $options['pin_cta_positions'] = array('after_content');
+        }
     }
 
     return $options;
 }
 
 // Add this right after the initial plugin checks
-add_action('admin_init', 'pin_cta_settings_init');
+// add_action('admin_init', 'pin_cta_settings_init'); // Removed duplicate, now handled in pin_cta_init()
 
 function pin_cta_style_field_callback() {
     $options = get_option('pin_cta_options', array('pin_cta_default_style' => 'default'));
@@ -308,6 +374,9 @@ function pin_cta_text_field_callback() {
 
 function pin_cta_auto_placement_callback() {
     $options = get_option('pin_cta_options', array('pin_cta_auto_placement' => 'disabled'));
+    
+    // For debugging
+    error_log('Pin CTA auto placement options: ' . print_r($options, true));
     ?>
     <select name="pin_cta_options[pin_cta_auto_placement]">
         <option value="disabled" <?php selected($options['pin_cta_auto_placement'], 'disabled'); ?>>Disabled</option>
@@ -323,9 +392,15 @@ function pin_cta_positions_callback() {
     );
     $options = get_option('pin_cta_options', $defaults);
     
+    // For debugging
+    error_log('Pin CTA positions options: ' . print_r($options, true));
+    
     if (!isset($options['pin_cta_positions'])) {
         $options['pin_cta_positions'] = $defaults['pin_cta_positions'];
     }
+    
+    // Add a hidden field to ensure the array is always sent, even when no checkboxes are selected
+    echo '<input type="hidden" name="pin_cta_options[pin_cta_positions]" value="">';
     
     $positions = array(
         'after_title' => 'After Title',
@@ -368,17 +443,22 @@ function pin_cta_options_page() {
 // Update the content filter to check only for posts
 function pin_cta_add_to_content($content) {
     // Only proceed if we're on a single post
-    if (!is_singular('post') || !in_the_loop()) {
+    // This ensures it only runs on individual post pages, not archives, home, etc.
+    if (!is_singular('post') || !in_the_loop() || !is_main_query()) {
+        return $content;
+    }
+
+    // For debugging
+    error_log('Pin CTA content filter running on post: ' . get_the_ID());
+
+    // Check if we should apply the CTA to this post
+    if (!pin_cta_should_apply_to_post()) {
+        error_log('Pin CTA should not be applied to this post');
         return $content;
     }
 
     // Get options
     $options = get_option('pin_cta_options');
-    
-    // Check if automatic placement is enabled
-    if (empty($options['pin_cta_auto_placement']) || $options['pin_cta_auto_placement'] !== 'enabled') {
-        return $content;
-    }
 
     // Generate the Pin CTA HTML
     $pin_cta = pin_cta_shortcode(array(
@@ -390,43 +470,57 @@ function pin_cta_add_to_content($content) {
     // Get selected positions
     $positions = (array)$options['pin_cta_positions'];
     
+    // For debugging
+    error_log('Pin CTA positions to apply: ' . print_r($positions, true));
+    
     // Store original content
     $modified_content = $content;
 
     // Handle each position
     foreach ($positions as $position) {
+        // Check if this position is valid for this content
+        if (!pin_cta_is_valid_position($position, $modified_content)) {
+            error_log('Pin CTA position ' . $position . ' is not valid for this content');
+            continue;
+        }
+        
         switch ($position) {
             case 'after_title':
                 // Add at the beginning of content
+                error_log('Pin CTA applying after_title position');
                 $modified_content = $pin_cta . $modified_content;
                 break;
 
             case 'after_first_header':
-                if (preg_match('/<h[2-6][^>]*>.*?<\/h[2-6]>/is', $modified_content)) {
-                    $modified_content = preg_replace(
-                        '/(<h[2-6][^>]*>.*?<\/h[2-6]>)/is',
-                        '$1' . $pin_cta,
-                        $modified_content,
-                        1
-                    );
-                }
+                error_log('Pin CTA applying after_first_header position');
+                $modified_content = preg_replace(
+                    '/(<h[2-6][^>]*>.*?<\/h[2-6]>)/is',
+                    '$1' . $pin_cta,
+                    $modified_content,
+                    1
+                );
                 break;
 
             case 'after_first_paragraph':
+                error_log('Pin CTA applying after_first_paragraph position');
                 $modified_content = preg_replace('/<\/p>/', '</p>' . $pin_cta, $modified_content, 1);
                 break;
 
             case 'middle_content':
+                error_log('Pin CTA applying middle_content position');
                 $parts = explode('</p>', $modified_content);
-                if (count($parts) > 1) {
-                    $middle = ceil(count($parts) / 2);
-                    $parts[$middle - 1] .= $pin_cta;
-                    $modified_content = implode('</p>', $parts);
-                }
+                $middle = ceil(count($parts) / 2);
+                $parts[$middle - 1] .= $pin_cta;
+                $modified_content = implode('</p>', $parts);
                 break;
 
             case 'after_content':
+                error_log('Pin CTA applying after_content position');
                 $modified_content .= $pin_cta;
+                break;
+
+            default:
+                error_log('Pin CTA unknown position: ' . $position);
                 break;
         }
     }
@@ -439,5 +533,89 @@ remove_filter('the_content', 'pin_cta_add_to_content', 20);
 remove_filter('the_title', 'pin_cta_after_post_title');
 
 // Add only the content filter
-add_filter('the_content', 'pin_cta_add_to_content', 20);
+// add_filter('the_content', 'pin_cta_add_to_content', 20); // Removed duplicate, now handled in pin_cta_init()
+
+// Add a function to check if we should apply the CTA to this post
+function pin_cta_should_apply_to_post($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    
+    // Only apply to posts, not pages or other post types
+    if (get_post_type($post_id) !== 'post') {
+        return false;
+    }
+    
+    // Get options
+    $options = get_option('pin_cta_options');
+    
+    // Check if automatic placement is enabled
+    if (empty($options['pin_cta_auto_placement']) || $options['pin_cta_auto_placement'] !== 'enabled') {
+        return false;
+    }
+    
+    return true;
+}
+
+// Add a function to test if a position is valid and should be applied
+function pin_cta_is_valid_position($position, $content) {
+    switch ($position) {
+        case 'after_title':
+            // Always valid
+            return true;
+            
+        case 'after_first_header':
+            // Check if there's at least one header
+            return preg_match('/<h[2-6][^>]*>.*?<\/h[2-6]>/is', $content) > 0;
+            
+        case 'after_first_paragraph':
+            // Check if there's at least one paragraph
+            return preg_match('/<\/p>/', $content) > 0;
+            
+        case 'middle_content':
+            // Check if there are at least two paragraphs
+            $parts = explode('</p>', $content);
+            return count($parts) > 1;
+            
+        case 'after_content':
+            // Always valid
+            return true;
+            
+        default:
+            return false;
+    }
+}
+
+// Initialize the plugin
+/**
+ * Initialize the Pin CTA plugin
+ * 
+ * This function sets up all the necessary hooks and filters for the plugin to work.
+ * It's called at the end of the plugin file to ensure everything is properly initialized.
+ * 
+ * @since 1.0.3
+ */
+function pin_cta_init() {
+    // Register the shortcode
+    add_shortcode('pin_cta_button', 'pin_cta_shortcode');
+    
+    // Register the block
+    add_action('init', 'pin_cta_register_block');
+    
+    // Add the admin menu
+    add_action('admin_menu', 'pin_cta_add_admin_menu');
+    
+    // Initialize settings
+    add_action('admin_init', 'pin_cta_settings_init');
+    
+    // Add the content filter
+    add_filter('the_content', 'pin_cta_add_to_content', 20);
+}
+
+// Run the initialization
+pin_cta_init();
+
+// Remove any existing hooks to prevent duplicates
+remove_filter('the_content', 'pin_cta_add_to_content', 20);
+remove_filter('the_title', 'pin_cta_after_post_title');
 
