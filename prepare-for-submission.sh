@@ -13,12 +13,20 @@ OUTPUT_DIR="$HOME/Desktop"
 SVN_TRUNK_DIR="/Users/jward/Projects/pin-cta-svn/trunk"
 SVN_TAGS_DIR="/Users/jward/Projects/pin-cta-svn/tags"
 
-# Extract version number from the main plugin file
-VERSION=$(head -20 pin-cta.php | grep "Version:" | sed -E 's/.*Version: ([0-9.]+).*/\1/')
+# Extract version number from the readme.txt file's Stable tag field
+VERSION=$(grep -m 1 "Stable tag:" readme.txt | sed -E 's/Stable tag: *([0-9.]+).*/\1/')
 
+# If Stable tag is not found or empty, fall back to Version in pin-cta.php
 if [ -z "$VERSION" ]; then
-    echo "Error: Could not extract version number from plugin file."
-    exit 1
+    echo "Warning: Could not extract version from Stable tag in readme.txt."
+    VERSION=$(head -20 pin-cta.php | grep "Version:" | sed -E 's/.*Version: ([0-9.]+).*/\1/')
+    
+    if [ -z "$VERSION" ]; then
+        echo "Error: Could not extract version number from plugin file either."
+        exit 1
+    else
+        echo "Using version from pin-cta.php instead: $VERSION"
+    fi
 fi
 
 echo "Preparing plugin version $VERSION for submission..."

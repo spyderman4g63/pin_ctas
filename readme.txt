@@ -3,7 +3,7 @@ Contributors: spyderman4g63
 Tags: Pinterest, Pin, Share, CTA, Share on Pinterest
 Requires at least: 6.7
 Tested up to: 6.7
-Stable tag: 1.0.1
+Stable tag: 1.2.0
 Requires PHP: 7.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -15,6 +15,8 @@ Add beautiful Pinterest share buttons to your content with 10 stunning pre-built
 **Pin CTA** is a powerful WordPress plugin that helps you encourage Pinterest sharing with stylish, customizable call-to-action buttons. Available as both a Gutenberg block and shortcode, it's perfect for food bloggers, DIY websites, and any content creator wanting to boost their Pinterest engagement.
 
 The plugin includes ten professionally designed styles, ranging from classic Pinterest red to elegant color combinations that will match any website theme.
+
+Join our [Traffic Alchemy community](https://traffic-alchemy.beehiiv.com/subscribe?utm_source=pin_cta) to discover proven strategies for growing and monetizing your websites and social media profiles. Get insider tips on driving traffic, maximizing ad revenue, and mastering affiliate marketing straight to your inbox!
 
 = Key Features =
 
@@ -67,7 +69,9 @@ Use the following shortcode format:
 
 == Screenshots ==
 1. Plugin in use on a post.
-2. All colors available.
+2. Options Panel
+3. All colors available.
+4. Image Pin button
 
 == Frequently Asked Questions ==
 
@@ -94,6 +98,25 @@ No, the plugin is lightweight and uses native WordPress functions. No external s
 
 == Changelog ==
 
+= 1.2.0
+* disable the buttons on all page except single post
+* added themes for pin it button
+* updated previews in admin panel
+
+= 1.1.1
+* added image overlay buttons
+
+= 1.0.6
+* fixed automatic insertion
+* fixed color constrast
+* fix inline layout
+
+= 1.0.5
+* fix automatic placement bug
+
+= 1.0.4
+* fix automatic placement bug
+
 = 1.0.3
 * fix automatic placement bug
 
@@ -105,8 +128,6 @@ No, the plugin is lightweight and uses native WordPress functions. No external s
 * Improved escaping of URLs for better security
 * Removed hidden files from plugin package
 * Updated "Tested up to" format in readme
-
-= 1.6 =
 * Added 6 new style variations
 * Introduced inline layout option
 * Added Gutenberg block support

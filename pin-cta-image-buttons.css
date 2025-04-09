@@ -1,0 +1,212 @@
+/**
+ * Pinterest CTA Image Buttons Styles
+ */
+
+.pin-cta-image-wrapper {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* Base button styles */
+.pin-cta-image-button {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    border-radius: 24px !important;
+    padding: 8px 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    text-decoration: none !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    z-index: 99 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.2s ease !important;
+}
+
+/* SVG and text styles */
+.pin-cta-image-button svg {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: 6px !important;
+}
+
+.pin-cta-image-button svg path {
+    fill: currentColor !important;
+}
+
+.pin-cta-button-text {
+    display: inline-block !important;
+    color: inherit !important;
+    margin-right: 0 !important;
+}
+
+/* Default theme (White background, red text/icon) */
+.pin-cta-image-button.default {
+    background-color: #ffffff !important;
+    color: #e60023 !important;
+}
+
+.pin-cta-image-button.default:hover {
+    background-color: #ffffff !important;
+    color: #ad081b !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Classic theme (Red background, white text/icon) */
+.pin-cta-image-button.classic {
+    background-color: #e60023 !important;
+    color: #ffffff !important;
+}
+
+.pin-cta-image-button.classic:hover {
+    background-color: #ad081b !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Style1 - Burgundy & Gold */
+.pin-cta-image-button.style1 {
+    background-color: #800020 !important;
+    color: #FFD700 !important;
+}
+
+.pin-cta-image-button.style1:hover {
+    background-color: #600018 !important;
+    color: #FFD700 !important;
+}
+
+/* Style2 - Fresh Green & White */
+.pin-cta-image-button.style2 {
+    background-color: #4CAF50 !important;
+    color: #ffffff !important;
+}
+
+.pin-cta-image-button.style2:hover {
+    background-color: #388E3C !important;
+    color: #ffffff !important;
+}
+
+/* Style3 - Soft Pink & Rose */
+.pin-cta-image-button.style3 {
+    background-color: #FFB6C1 !important;
+    color: #C71585 !important;
+}
+
+.pin-cta-image-button.style3:hover {
+    background-color: #FFA6B1 !important;
+    color: #C71585 !important;
+}
+
+/* Style4 - Navy & Gold */
+.pin-cta-image-button.style4 {
+    background-color: #000080 !important;
+    color: #FFD700 !important;
+}
+
+.pin-cta-image-button.style4:hover {
+    background-color: #000066 !important;
+    color: #FFD700 !important;
+}
+
+/* Style5 - Sage & Cream */
+.pin-cta-image-button.style5 {
+    background-color: #9CAF88 !important;
+    color: #FFFDD0 !important;
+}
+
+.pin-cta-image-button.style5:hover {
+    background-color: #8C9F78 !important;
+    color: #FFFDD0 !important;
+}
+
+/* Style6 - Royal Purple & Lavender */
+.pin-cta-image-button.style6 {
+    background-color: #4B0082 !important;
+    color: #E6E6FA !important;
+}
+
+.pin-cta-image-button.style6:hover {
+    background-color: #3A0066 !important;
+    color: #E6E6FA !important;
+}
+
+/* Style7 - Ocean Teal & Coral */
+.pin-cta-image-button.style7 {
+    background-color: #008080 !important;
+    color: #FF7F50 !important;
+}
+
+.pin-cta-image-button.style7:hover {
+    background-color: #006666 !important;
+    color: #FF7F50 !important;
+}
+
+/* Style8 - Midnight Blue & Silver */
+.pin-cta-image-button.style8 {
+    background-color: #191970 !important;
+    color: #C0C0C0 !important;
+}
+
+.pin-cta-image-button.style8:hover {
+    background-color: #13134F !important;
+    color: #C0C0C0 !important;
+}
+
+/* Style9 - Autumn Orange & Cream */
+.pin-cta-image-button.style9 {
+    background-color: #D2691E !important;
+    color: #FFFDD0 !important;
+}
+
+.pin-cta-image-button.style9:hover {
+    background-color: #B85A1A !important;
+    color: #FFFDD0 !important;
+}
+
+/* Style10 - Forest & Mint */
+.pin-cta-image-button.style10 {
+    background-color: #228B22 !important;
+    color: #98FF98 !important;
+}
+
+.pin-cta-image-button.style10:hover {
+    background-color: #1B6B1B !important;
+    color: #98FF98 !important;
+}
+
+/* Hover effect for all buttons */
+.pin-cta-image-button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .pin-cta-image-button {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+    }
+    
+    .pin-cta-image-button svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+}
+
+/* Ensure the button doesn't interfere with other elements like captions */
+.pin-cta-image-wrapper .wp-caption-text,
+.pin-cta-image-wrapper figcaption {
+    /* Allow captions to display normally */
+}
+
+/* Make sure the button doesn't interfere with captions (redundant?) */
+.wp-caption .pin-cta-image-wrapper {
+    display: block; /* Already handled by wrapper */
+} 
